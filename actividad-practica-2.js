@@ -8,29 +8,38 @@ class CuentaBancaria {
     this.#saldoInicial = saldoInicial;
   }
 
-  saldoInicial(nuevoSaldo) {
-    if (nuevoSaldo < 0) {
-      console.log(
-        "Lo sentimos, el saldo no puede establacerse como un valor negativo"
-      );
-    }
-
-    this.#saldoInicial = nuevoSaldo;
+  getter() {
+    console.log(
+      `Titular ${this.titular} - Saldo actual: ${this.#saldoInicial}`
+    );
   }
 
-  depositar(monto) {
+  setter(monto) {
+    if (monto < 0) {
+      console.log("El monto debe ser mayor a 0");
+    }
+
+    console.log(`Saldo: ${this.#saldoInicial}`);
     this.#saldoInicial += monto;
+    console.log(`Monto Ingresado: -> ${monto}`);
+    console.log(`Saldo Actual: ${this.#saldoInicial}`);
   }
 
   extraer(monto) {
-    if (this.#saldoInicial >= monto) {
-      this.#saldoInicial -= monto;
-    } else {
+    if (!(monto > 0 && this.#saldoInicial >= monto)) {
       console.log("Lo sentimos, fondos insuficientes");
     }
-  }
 
-  getter() {
-    console.log(`Saldo actual: ${this.#saldoInicial}`);
+    this.#saldoInicial -= monto;
+
+    console.log(`Saldo: $${this.#saldoInicial}`);
+    console.log(`Extracción: -> $${monto}`);
+    console.log(`Saldo Restante: $${this.#saldoInicial}`);
   }
 }
+
+const cuenta = new CuentaBancaria("Jhon Doe", 1000);
+
+cuenta.getter();
+cuenta.extraer(200);
+cuenta.setter(2000);
